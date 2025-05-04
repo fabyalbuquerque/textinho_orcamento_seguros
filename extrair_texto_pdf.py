@@ -109,7 +109,7 @@ def encontra_informacoes(texto, seguradora, informacoes_textinho):
     if seguradora == 'BRADESCO':
         nomes = re.findall(r'NOME:\s*(.*?)(?=\s*(VIGÊNCIA|\n|CPF/CNPJ))', texto)
         modelo_veiculo = re.search(r'TIPO DO VEÍCULO:\s*(.*?)(?=\s*CHASSI)', texto)
-        ajuste = re.search(r'FATOR DE AJUSTE:\s*(.*?%)', texto)
+        ajuste = re.search(r'FATOR DE AJUSTE:\s*(\d+\s*%)', texto)
         franquia_tipo_e_valor = re.search(r'F*RANQUIAS\s*\(.*?\)\s*VEÍCULO:\s*([\d.,]+)\s*\((.*?)\)', texto)
 
         if "COMPREENSIVA" in texto:
@@ -128,7 +128,7 @@ def encontra_informacoes(texto, seguradora, informacoes_textinho):
         informacoes_textinho['nome_segurado'] = nomes[0][0].strip() if len(nomes) >= 1 else 'Não encontrado'
         informacoes_textinho['nome_condutor'] = nomes[1][0].strip() if len(nomes) >= 2 else 'Não encontrado'
         informacoes_textinho['modelo_veiculo'] = modelo_veiculo.group(1).strip() if modelo_veiculo else 'Não encontrado'
-        informacoes_textinho['ajuste'] = ajuste.group(1).strip()
+        informacoes_textinho['ajuste'] = ajuste.group(1).strip().replace(' ','')
         informacoes_textinho['franquia_tipo'] = franquia_tipo_e_valor.group(2).strip()
         informacoes_textinho['franquia_valor'] = franquia_tipo_e_valor.group(1).strip()
         informacoes_textinho['cobertura'] = cobertura
@@ -145,7 +145,7 @@ def encontra_informacoes(texto, seguradora, informacoes_textinho):
             if "ILIMITADO" in recorte_clausulas:
                 guincho = "ILIMITADO"
             else:
-                guincho = re.search(r'DIA/NOITE.*?(\d+)\s+KM', recorte_clausulas).group(1).strip()
+                guincho = re.search(r'DIA/NOITE.*?(\d+)\s*[Kk][Mm]', recorte_clausulas).group(1).strip()
                 guincho = guincho + " Km"
 
             informacoes_textinho['guincho'] = guincho
