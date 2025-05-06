@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload de Cotação de Seguro{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Upload de Cotação de Seguro</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="arquivo" class="form-label">Selecione um arquivo PDF de cotação de seguro</label>
+                        <input type="file" class="form-control" id="arquivo" name="arquivo" accept=".pdf" required>
+                        <div class="form-text">O arquivo deve estar no formato PDF.</div>
+                    </div>
+                    <div class="mb-3">
+                        <p><strong>Seguradoras suportadas:</strong></p>
+                        <ul>
+                            <li>Bradesco Seguros</li>
+                            <!-- Adicione outras seguradoras à medida que forem implementadas -->
+                        </ul>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Processar</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <h5>Como utilizar:</h5>
+            <ol>
+                <li>Selecione o arquivo PDF da cotação de seguro</li>
+                <li>Clique em "Processar"</li>
+                <li>O sistema irá analisar o arquivo e extrair as informações</li>
+                <li>O textinho formatado será exibido para você copiar para o WhatsApp</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}

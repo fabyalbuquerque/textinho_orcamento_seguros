@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Textinho Gerado{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Textinho Gerado - {{ seguradora }}</h4>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label"><strong>Textinho para WhatsApp:</strong></label>
+                    <div class="whatsapp-text" id="textinho">{{ textinho|safe }}</div>
+                </div>
+                <button class="btn btn-primary" onclick="copiarTextinho()">
+                    <i class="bi bi-clipboard"></i> Copiar
+                </button>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+            </div>
+        </div>
+        
+        <div class="alert alert-info">
+            <p><strong>Dica:</strong> Você pode copiar este texto e colar diretamente no WhatsApp. Os emojis e formatações serão preservados.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function copiarTextinho() {
+        const textinho = document.getElementById('textinho');
+        const selecao = window.getSelection();
+        const intervalo = document.createRange();
+        
+        intervalo.selectNodeContents(textinho);
+        selecao.removeAllRanges();
+        selecao.addRange(intervalo);
+        
+        try {
+            const copiado = document.execCommand('copy');
+            if (copiado) {
+                alert('Textinho copiado com sucesso!');
+            } else {
+                alert('Não foi possível copiar o textinho. Por favor, selecione o texto manualmente e use Ctrl+C.');
+            }
+        } catch (err) {
+            alert('Erro ao copiar: ' + err);
+        }
+        
+        selecao.removeAllRanges();
+    }
+</script>
+{% endblock %}
